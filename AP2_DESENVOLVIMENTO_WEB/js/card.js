@@ -1,71 +1,80 @@
-const jogadores = [
-    // Função para carregar e processar o arquivo JSON
-    function carregarDados() {
-        fetch('C:\Users\202203798936\Desktop\AP2_DESENVOLVIMENTO_WEB\js\jogadores2023.js')
-        .then(response => response.json())
-        .then(data => {
-            // Atribuir os dados do arquivo JSON à constante 'jogadores'
-            jogadores = data;
-            
-            // Chamar a função para criar os cards
-            criarCards();
-        })
-        .catch(error => {
-            console.error('Erro ao carregar o arquivo JSON:', error);
-        });
-    }  
-];
-    // Função para criar os cards
-    function criarCards() {
-        const container = document.getElementById("card-container");
-    
-        jogadores.forEach(jogador => {
-        const card = document.createElement("div");
-        card.className = "card";
-    
-        const imagem = document.createElement("img");
-        imagem.src = jogador.imagem;
-        imagem.alt = jogador.nome_completo;
-    
-        const nome = document.createElement("h2");
-        nome.textContent = jogador.nome;
-    
-        const posicao = document.createElement("p");
-        posicao.textContent = `Posição: ${jogador.posicao}`;
-    
-        const descricao = document.createElement("p");
-        descricao.textContent = jogador.descricao;
-    
-        const nascimento = document.createElement("p");
-        nascimento.textContent = `Nascimento: ${jogador.nascimento}`;
-    
-        const altura = document.createElement("p");
-        altura.textContent = `Altura: ${jogador.altura}`;
-    
-        card.appendChild(imagem);
-        card.appendChild(nome);
-        card.appendChild(posicao);
-        card.appendChild(descricao);
-        card.appendChild(nascimento);
-        card.appendChild(altura);
-    
-        container.appendChild(card);
-        });
-    }
-    
-    // Carrega o arquivo JSON
-    fetch('..\js\jogadores2023.js')
-        .then(response => response.json())
-        .then(data => {
-        jogadores = data;
-        criarCards();
-        })
-        .catch(error => {
-        console.error('Erro ao carregar o arquivo JSON:', error);
-        });
-  
-  // Chama a função para criar os cards ao carregar a página
-  window.addEventListener("load", criarCards);
-// Chama a função para carregar os dados e criar os cards ao carregar a página
-window.addEventListener('load', carregarDados);
-  
+// variável das jogadoras femininas
+const jogadorasFemininas = jogadores.filter(jogador => jogador.elenco === 'feminino');
+
+// função para carregar na sessionStorage todas as informações do(a) jogador(a) clicado
+const manipula_click = (evento) => {
+  const clicada = evento.target;
+  sessionStorage.setItem('elenco', clicada.dataset.elenco);
+  sessionStorage.setItem('nome', clicada.dataset.nome);
+  sessionStorage.setItem('posicao', clicada.dataset.posicao);
+  sessionStorage.setItem('descricao', clicada.dataset.descricao);
+  sessionStorage.setItem('nomecomp', clicada.dataset.nomecomp);
+  sessionStorage.setItem('nascimento', clicada.dataset.nascimento);
+  sessionStorage.setItem('altura', clicada.dataset.altura);
+  sessionStorage.setItem('imagem', clicada.src);
+
+  window.location.href = 'detalhes.html';
+}
+
+// função para criar cards 
+function criarCard(jogador) {
+  // variável 'card' sendo uma <div> onde serão colocadas a posição, imagem e nome do(a) jogador(a)
+  const card = document.createElement('div');
+  // adiciona a classe 'card' para estilização da div pelo css
+  card.classList.add('card');
+
+  // variável 'imagem' sendo uma <img> que recebe src, alt e a classe 'card-img' 
+  const imagem = document.createElement('img');
+  imagem.src = jogador.imagem;
+  imagem.alt = jogador.nome;
+  imagem.classList.add('card-img');
+
+  // chamar a função manipula_click quando a <img> for clicada e gravar os atributos do(a) jogador(a) com o .dataset
+  imagem.onclick = manipula_click;
+  imagem.dataset.elenco = jogador.elenco;
+  imagem.dataset.nome = jogador.nome;
+  imagem.dataset.posicao = jogador.posicao
+  imagem.dataset.descricao = jogador.descricao;
+  imagem.dataset.nomecomp = jogador.nome_completo;
+  imagem.dataset.nascimento = jogador.nascimento;
+  imagem.dataset.altura = jogador.altura;
+  // efeito para quando passar o mouse em cima das imagens
+  imagem.onmouseover = (e) => {e.target.style.width = '110%'};
+  imagem.onmouseleave = (e) => {e.target.style.width = '100%'};
+
+  // variável 'nome' sendo um <h3> e classe 'card-title'
+  const nome = document.createElement('h3');
+  nome.textContent = jogador.nome;
+  nome.classList.add('card-title');
+
+  // variável 'posicao' sendo um <h3> e classe 'card-posicao'
+  const posicao = document.createElement('h3');
+  posicao.textContent = jogador.posicao;
+  posicao.classList.add('card-posicao');
+
+  // adicionando posição, imagem e nome como elementos filhos em relação ao card
+  card.appendChild(posicao);
+  card.appendChild(imagem);
+  card.appendChild(nome);
+
+  // função retorna um card por vez, depois eles serão exibidos conforme o div container
+  return card;
+}
+
+//  variável do container dos cards femininos
+const cardsContainerFeminino = document.getElementById('cards-container-feminino');
+
+// variável do container dos cards masculinos
+const cardsContainerMasculino = document.getElementById('cards-container-masculino');
+
+// iterar sobre as jogadoras femininas, criar os cards e adicionar no container dos cards femininos
+jogadorasFemininas.forEach(function(jogadora) {
+    const card = criarCard(jogadora);
+    cardsContainerFeminino.appendChild(card);
+  });
+
+// iterar sobre os jogadores masculinos, criar os cards e adicionar no container dos cards masculinos
+jogadoresMasculinos.forEach(function(jogador) {
+  const card = criarCard(jogador);
+  cardsContainerMasculino.appendChild(card);
+});
