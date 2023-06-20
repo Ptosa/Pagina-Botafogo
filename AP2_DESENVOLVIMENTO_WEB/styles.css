@@ -4,6 +4,11 @@ body {
   color: black;
 }
 
+h2  {
+  text-align: center;
+   margin-bottom: 0.5em;
+}
+
 .cards-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* Inicialmente, 2 colunas */

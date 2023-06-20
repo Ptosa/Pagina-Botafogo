@@ -6,6 +6,9 @@ const jogadorasFemininas = jogadores.filter(jogador => jogador.elenco === 'femin
 
 // função para carregar na sessionStorage todas as informações do(a) jogador(a) clicado
 const manipula_click = (evento) => {
+  let audio = new Audio("sons/botafogo-radio-globo.mp3");
+  audio.play();
+  console.log("BOTAFOGO")
   const clicada = evento.target;
   sessionStorage.setItem('nomecomp', clicada.dataset.nomecomp);
   window.location.href = 'detalhes.html';
@@ -65,7 +68,8 @@ jogadoresMasculinos.forEach(function(jogador) {
   cardsContainerMasculino.appendChild(card);
 });
 
-window.addEventListener('DOMContentLoaded', () => {
-  let audio = new Audio("sons/botafogo-radio-globo.mp3");
+
+window.addEventListener('DOMContentLoaded', (event) => {
+  var audio = document.getElementById('meuAudio');
   audio.play();
 });
