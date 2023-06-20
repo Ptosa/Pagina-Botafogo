@@ -7,7 +7,15 @@ const jogadorasFemininas = jogadores.filter(jogador => jogador.elenco === 'femin
 // função para carregar na sessionStorage todas as informações do(a) jogador(a) clicado
 const manipula_click = (evento) => {
   const clicada = evento.target;
+  sessionStorage.setItem('elenco', clicada.dataset.elenco);
+  sessionStorage.setItem('nome', clicada.dataset.nome);
+  sessionStorage.setItem('posicao', clicada.dataset.posicao);
+  sessionStorage.setItem('descricao', clicada.dataset.descricao);
   sessionStorage.setItem('nomecomp', clicada.dataset.nomecomp);
+  sessionStorage.setItem('nascimento', clicada.dataset.nascimento);
+  sessionStorage.setItem('altura', clicada.dataset.altura);
+  sessionStorage.setItem('imagem', clicada.src);
+
   window.location.href = 'detalhes.html';
 }
 
@@ -26,7 +34,16 @@ function criarCard(jogador) {
 
   // chamar a função manipula_click quando a <img> for clicada e gravar os atributos do(a) jogador(a) com o .dataset
   imagem.onclick = manipula_click;
+  imagem.dataset.elenco = jogador.elenco;
+  imagem.dataset.nome = jogador.nome;
+  imagem.dataset.posicao = jogador.posicao
+  imagem.dataset.descricao = jogador.descricao;
   imagem.dataset.nomecomp = jogador.nome_completo;
+  imagem.dataset.nascimento = jogador.nascimento;
+  imagem.dataset.altura = jogador.altura;
+  // efeito para quando passar o mouse em cima das imagens
+  imagem.onmouseover = (e) => {e.target.style.width = '110%'};
+  imagem.onmouseleave = (e) => {e.target.style.width = '100%'};
 
   // variável 'nome' sendo um <h3> e classe 'card-title'
   const nome = document.createElement('h3');
@@ -34,12 +51,12 @@ function criarCard(jogador) {
   nome.classList.add('card-title');
 
   // variável 'posicao' sendo um <h3> e classe 'card-posicao'
-  const cidade = document.createElement('h3');
-  cidade.textContent = jogador.nascimento.split(",")[1];
-  cidade.classList.add('card-posicao');
+  const posicao = document.createElement('h3');
+  posicao.textContent = jogador.posicao;
+  posicao.classList.add('card-posicao');
 
   // adicionando posição, imagem e nome como elementos filhos em relação ao card
-  card.appendChild(cidade);
+  card.appendChild(posicao);
   card.appendChild(imagem);
   card.appendChild(nome);
 
@@ -63,9 +80,4 @@ jogadorasFemininas.forEach(function(jogadora) {
 jogadoresMasculinos.forEach(function(jogador) {
   const card = criarCard(jogador);
   cardsContainerMasculino.appendChild(card);
-});
-
-window.addEventListener('DOMContentLoaded', () => {
-  let audio = new Audio("sons/botafogo-radio-globo.mp3");
-  audio.play();
 });
