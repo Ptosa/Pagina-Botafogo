@@ -16,7 +16,7 @@ const tituloDetalhesElement = document.getElementById('tituloPrincipal');
 
 if (jogadoresdetalhe.elenco === 'masculino') {
   tituloDetalhesElement.textContent = 'Detalhes do Jogador';
-} else if (jogadoredetalhe.elenco === 'feminino') {
+} else if (jogadoresdetalhe.elenco === 'feminino') {
     console.log(elenco);
   tituloDetalhesElement.textContent = 'Detalhes da Jogadora';
 };

@@ -15,15 +15,12 @@ const manipula_click = (evento) => {
 function criarCard(jogador) {
   const card = document.createElement('div');
   card.classList.add('card');
-
   const imagem = document.createElement('img');
   imagem.src = jogador.imagem;
   imagem.alt = jogador.nome;
   imagem.classList.add('card-img');
-
   imagem.onclick = manipula_click;
   imagem.dataset.nomecomp = jogador.nome_completo;
-
   const nome = document.createElement('h3');
   nome.textContent = jogador.nome;
   nome.classList.add('card-title');
@@ -39,9 +36,9 @@ function criarCard(jogador) {
   return card;
 }
 
-const cardsContainerF = document.getElementById('cards-container-feminino');
+const cardsContainerF = document.getElementById('cards-container-f');
 
-const cardsContainerM = document.getElementById('cards-container-masculino');
+const cardsContainerM = document.getElementById('cards-container-m');
 
 jogadorasFemininas.forEach(function(jogadora) {
     const card = criarCard(jogadora);
