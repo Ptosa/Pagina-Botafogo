@@ -6,7 +6,7 @@ const jogadorasFemininas = jogadores.filter(jogador => jogador.elenco === 'femin
 const manipula_click = (evento) => {
   let audio = new Audio("sons/botafogo-radio-globo.mp3");
   audio.play();
-  console.log("BOTAFOGO")
+  //console.log("BOTAFOGO")
   const clicada = evento.target;
   sessionStorage.setItem('nomecomp', clicada.dataset.nomecomp);
   window.location.href = 'detalhes.html';
@@ -39,18 +39,18 @@ function criarCard(jogador) {
   return card;
 }
 
-const cardsContainerFeminino = document.getElementById('cards-container-feminino');
+const cardsContainerF = document.getElementById('cards-container-feminino');
 
-const cardsContainerMasculino = document.getElementById('cards-container-masculino');
+const cardsContainerM = document.getElementById('cards-container-masculino');
 
 jogadorasFemininas.forEach(function(jogadora) {
     const card = criarCard(jogadora);
-    cardsContainerFeminino.appendChild(card);
+    cardsContainerF.appendChild(card);
   });
 
 jogadoresMasculinos.forEach(function(jogador) {
   const card = criarCard(jogador);
-  cardsContainerMasculino.appendChild(card);
+  cardsContainerM.appendChild(card);
 });
 
 
